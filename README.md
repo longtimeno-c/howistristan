@@ -68,8 +68,9 @@ Each panel says when its data was last updated and turns amber when it is out of
      `GARMIN_TOKENS` set. It prints the field names Garmin returned, without the values.
 5. **Email and notes** need an agent. Set up the daily scheduled task described at the end
    of AGENT.md.
-6. **Hosting.** Settings, Pages, deploy from `main`, root folder. The site is then public at
-   `https://longtimeno-c.github.io/howistristan/`.
+6. **Hosting.** GitHub Pages serves the `gh-pages` branch at
+   `https://longtimeno-c.github.io/howistristan/`. The workflow copies `main` to `gh-pages` at the
+   end of every run and on every push to `main`, so there is nothing to deploy by hand.
 
 ## What gets published
 

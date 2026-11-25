@@ -5,10 +5,13 @@ name: Update data
 #   Calendar          when the GCAL_ICS_URLS secret is set
 #   Watch data        when the GARMIN_TOKENS secret is set
 # See README.md for how to create each secret.
+# It ends by copying main to the gh-pages branch, which is what GitHub Pages serves.
 
 on:
   schedule:
     - cron: "7,22,37,52 * * * *"
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -84,3 +87,6 @@ jobs:
             git pull --rebase --autostash
             git push
           fi
+
+      - name: Publish to the website
+        run: git push --force origin HEAD:gh-pages
