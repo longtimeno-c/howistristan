@@ -158,6 +158,7 @@ node scripts/build-artifact.mjs
 
 then publish `dist/artifact.html` with the artifact's `url`, passing every `data/*.json` file in
 `files` at the same relative path (`data/calendar.json` and so on).
+Find the artifact by listing Tristan's artifacts and picking the one titled "How is Tristan".
 
 ## Running this on a schedule
 
