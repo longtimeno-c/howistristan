@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How is Tristan</title>
+<meta name="description" content="A live status page for one person: what Tristan is doing right now, how rested he is, and what is coming up.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<!-- page:start -->
+<div class="wrap">
+  <header class="mast">
+    <div class="name">How is Tristan?</div>
+    <div class="clock" id="clock"></div>
+  </header>
+
+  <main class="wrap-main" style="display:contents">
+    <section class="hero" aria-labelledby="verdict">
+      <div class="answer">
+        <h1 id="verdict">Checking in…</h1>
+        <p class="sub" id="verdict-sub"></p>
+        <div class="nowcard" id="nowcard" aria-live="polite"></div>
+      </div>
+      <div class="stage" id="stage">
+        <svg class="figure" id="figure" viewBox="0 0 200 420" role="img" aria-label="Body figure">
+          <defs>
+            <mask id="bodymask" maskUnits="userSpaceOnUse" x="0" y="0" width="200" height="420">
+              <g fill="#fff" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="100" cy="44" r="30" stroke="none"/>
+                <rect x="89" y="66" width="22" height="26" stroke="none"/>
+                <path d="M64 92 Q100 80 136 92 L130 214 Q100 224 70 214 Z" stroke-width="8"/>
+                <polyline points="58,104 42,170 36,236" fill="none" stroke-width="22"/>
+                <polyline points="142,104 158,170 164,236" fill="none" stroke-width="22"/>
+                <polyline points="84,212 80,300 78,392" fill="none" stroke-width="28"/>
+                <polyline points="116,212 120,300 122,392" fill="none" stroke-width="28"/>
+              </g>
+            </mask>
+          </defs>
+          <g mask="url(#bodymask)">
+            <rect class="fig-empty" x="0" y="0" width="200" height="420" stroke="none"/>
+            <g id="fig-level" class="fig-fill" transform="translate(0 420)">
+              <g class="fig-wave"><path d="M0 4 Q25 -4 50 4 T100 4 T150 4 T200 4 T250 4 T300 4 V430 H0 Z"/></g>
+            </g>
+          </g>
+          <circle id="fig-heart" class="fig-heart" cx="112" cy="128" r="6"/>
+        </svg>
+        <svg class="leaders" viewBox="0 0 640 420" aria-hidden="true">
+          <polyline points="350,44 404,50 428,50"/><circle cx="350" cy="44" r="3.5"/>
+          <polyline points="332,128 404,150 428,150"/>
+          <polyline points="384,236 408,250 428,250"/><circle cx="384" cy="236" r="3.5"/>
+          <polyline points="341,330 404,350 428,350"/><circle cx="341" cy="330" r="3.5"/>
+          <polyline points="280,100 236,90 212,90"/><circle cx="280" cy="100" r="3.5"/>
+          <polyline points="300,195 236,200 212,200"/><circle cx="300" cy="195" r="3.5"/>
+          <polyline points="300,310 236,320 212,320"/><circle cx="300" cy="310" r="3.5"/>
+        </svg>
+      </div>
+    </section>
+
+    <div class="alert" id="alert" role="note" hidden>
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 3 18 17H2Z" fill="none"/><path d="M10 8v4" fill="none"/><path d="M10 14.6v.1" fill="none"/></svg>
+      <h3 id="alert-title"></h3>
+      <p id="alert-text"></p>
+    </div>
+
+    <section class="block" aria-labelledby="h-today">
+      <header><h2 id="h-today">Today</h2><span class="asof" id="cal-asof"></span></header>
+      <div class="panel">
+        <div class="hint" id="today-sum"></div>
+        <div class="today-top"><div id="today-track"></div><div class="hours"><span>00</span><span>06</span><span>12</span><span>18</span><span>24</span></div></div>
+        <ul class="agenda" id="today-list"></ul>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="h-days">
+      <header>
+        <h2 id="h-days">The next two weeks</h2>
+        <div class="legend" aria-label="Colour key">
+          <span><i class="cat-work"></i>Work</span><span><i class="cat-uni"></i>University</span><span><i class="cat-sport"></i>Swim and surf</span>
+          <span><i class="cat-raf"></i>Air squadron</span><span><i class="cat-social"></i>Social</span><span><i class="cat-trip"></i>Trip</span>
+          <span><i class="cat-travel"></i>Travel</span><span><i class="dash"></i>Clash, will be missed</span>
+        </div>
+      </header>
+      <div class="panel"><div class="days" id="days"></div></div>
+    </section>
+
+    <section class="block" aria-labelledby="h-rec">
+      <header><h2 id="h-rec">Recovery</h2><span class="asof" id="body-asof"></span></header>
+      <div class="panel">
+        <h3 id="sleep-title">Sleep, last 14 nights</h3>
+        <div class="legend" style="margin:6px 0 10px">
+          <span><i style="background:var(--water)"></i>Hours slept</span><span><i style="background:var(--crit)"></i>Under 5 h</span>
+          <span><i class="tick"></i>Sleep need that night</span><span><i class="off"></i>Watch off</span>
+        </div>
+        <div id="sleep-chart"></div>
+        <div class="statrow" id="sleep-stats"></div>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="h-load">
+      <header><h2 id="h-load">Load</h2></header>
+      <div class="cols">
+        <div class="panel">
+          <h3>Today against last night</h3>
+          <p class="hint">The same score the review uses. Recovery has to cover load.</p>
+          <div class="meter" id="load-meter"></div>
+          <p class="verdictline" id="load-line"></p>
+          <p class="verdictline" id="load-avg"></p>
+        </div>
+        <div class="panel">
+          <h3>Committed hours per week</h3>
+          <p class="hint">Shifts, lectures, squadron, swimming, duty socials and travel. Dashed bars are planned.</p>
+          <div id="week-chart"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="h-out">
+      <header><h2 id="h-out">Output</h2></header>
+      <div class="cols">
+        <div class="panel">
+          <h3>Email <span class="asof" id="email-asof" style="margin-left:6px"></span></h3>
+          <p class="hint">Sent per day this week.</p>
+          <div id="email-days"></div>
+          <p class="hint" id="email-hint" style="margin:18px 0 10px"></p>
+          <div id="email-chart"></div>
+        </div>
+        <div class="panel">
+          <h3>GitHub <span class="asof" id="git-asof" style="margin-left:6px"></span></h3>
+          <p class="hint" id="git-feed-title">Recent activity</p>
+          <ul class="feed" id="git-feed"></ul>
+          <p class="hint" id="git-hint" style="margin:18px 0 10px"></p>
+          <div id="git-chart"></div>
+          <p class="hint" style="margin:14px 0 0"><a id="git-link" href="https://github.com/" rel="noopener">GitHub profile</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" aria-labelledby="h-watch">
+      <header><h2 id="h-watch">Worth watching</h2></header>
+      <div class="cols">
+        <div class="panel"><ul class="watch" id="watch"></ul></div>
+        <div class="panel"><h3>Habits that help</h3><p class="hint">From the last review.</p><ul class="habits" id="habits"></ul></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="sources" id="sources"></div>
+    <p>The clock, the current activity and the energy figure are worked out in your browser every 30 seconds from the calendar. Energy is an estimate: last night's recharge, drained by the hours awake and what the calendar says those hours held. It is not a watch reading. Calendar entries are reduced to a label and a time before they are published. None of this is medical advice.</p>
+  </footer>
+</div>
+<!-- page:end -->
+<script src="assets/app.js"></script>
+</body>
+</html>

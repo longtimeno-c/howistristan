@@ -1,0 +1,29 @@
+{
+  "updatedAt": "2026-11-25T16:45:00Z",
+  "source": "Gmail sent folder, counted by an agent (counts and times only)",
+  "notes": [
+    "days.sent counts every message in Sent, including notes-to-self and a few app-generated sends.",
+    "review covers 8 Oct to 25 Nov and comes from the workload review; byHourWritten hours without a printed label were read off its chart."
+  ],
+  "days": {
+    "2026-11-18": { "sent": 22, "lastSent": "17:34" },
+    "2026-11-19": { "sent": 20, "lastSent": "23:06" },
+    "2026-11-20": { "sent": 10, "lastSent": "11:53" },
+    "2026-11-21": { "sent": 5, "lastSent": "11:25" },
+    "2026-11-22": { "sent": 3, "lastSent": "16:29" },
+    "2026-11-23": { "sent": 4, "lastSent": "15:30" },
+    "2026-11-24": { "sent": 11, "lastSent": "20:33" },
+    "2026-11-25": { "sent": 12, "lastSent": "16:19", "partial": true }
+  },
+  "review": {
+    "from": "2026-10-08",
+    "to": "2026-11-25",
+    "sent": 337,
+    "written": 235,
+    "automated": 102,
+    "byHourWritten": [0, 0, 0, 0, 0, 0, 0, 2, 13, 14, 23, 28, 22, 12, 19, 27, 21, 20, 6, 3, 7, 11, 5, 2],
+    "afterShortNight": 5.4,
+    "afterFullNight": 3.8,
+    "themes": ["Surf Society Christmas dinner", "OUAS transport and accommodation", "Surf lessons for 4 and 5 Dec"]
+  }
+}

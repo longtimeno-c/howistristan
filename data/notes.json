@@ -1,0 +1,17 @@
+{
+  "updatedAt": "2026-11-25T16:02:00Z",
+  "source": "Workload review, 25 Nov. Written by an agent, not measured.",
+  "watch": [
+    { "date": "2026-11-25", "level": "high", "title": "A 13-hour day, then a late drive", "detail": "Shift until 20:15, then Reading to Somerset from 20:30 to 23:30. Last night's 10 h sleep is a better base than the earlier late drives. Straight there, no extra stops, and not if already tired." },
+    { "date": "2026-11-26", "level": "low", "title": "Not a rest day", "detail": "Lunch, then the drive back from 16:00 to 19:00 makes 5.5 h of commitments. Keep the evening after 19:00 clear." },
+    { "date": "2026-12-02", "level": "high", "title": "The sharpest day ahead", "detail": "A 06:00 leave for a 07:00 shift, the Southampton car swap from 16:50, then Union until 02:00 as a VP duty, the night before Cornwall. Hand the late part to another committee member and push the Cornwall drive to after a proper sleep." },
+    { "date": "2026-12-06", "level": "medium", "title": "Drive home after checkout", "detail": "Checkout is 09:30 and the return drive is not in the calendar. Monday has lectures, Town Night and an all-day engineer visit in Somerset, which cannot all happen." },
+    { "date": "2026-12-08", "level": "medium", "title": "Late car swap after swim", "detail": "Practical, lecture, swim, then Southampton and back by 22:45. Straight to sleep afterwards." }
+  ],
+  "habits": [
+    "Hard stop for coding at 23:00. Late commits are often an agent already.",
+    "After any night under 6 h, keep the next morning clear and be in bed by about 23:30.",
+    "Aim for 7 h or more before a flying day or a long drive.",
+    "Rotate the late part of VP duty so one person is not closing every social."
+  ]
+}

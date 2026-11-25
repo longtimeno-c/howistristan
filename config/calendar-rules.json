@@ -1,0 +1,44 @@
+{
+  "_readme": "Maps raw calendar events to what the public page may show. First matching rule wins; `match` is a case-insensitive regex tested against the event title with emoji removed. Nothing but `label`, `cat` and times is ever published: no descriptions, locations, attendees or links. Events that match no rule become an anonymous 'Busy' block (timed) or are dropped (all-day).",
+  "timezone": "Europe/London",
+  "windowDays": { "past": 3, "future": 21 },
+  "default": { "timed": { "cat": "other", "label": "Busy" }, "allDay": "skip" },
+  "skipFreeTimed": true,
+  "rules": [
+    { "match": "\\bTBC\\b", "skip": true },
+    { "match": "clock out", "skip": true },
+    { "match": "^stay at", "skip": true },
+    { "match": "fine|instal+ment|HMRC|payment|delivery|invoice|dentist|doctor|\\bGP\\b|bank", "skip": true },
+
+    { "match": "travel to screwfix", "cat": "travel", "label": "Travel to work" },
+    { "match": "screwfix shift", "cat": "work", "label": "Screwfix shift" },
+
+    { "match": "travel to swim", "cat": "travel", "label": "Travel to swim", "routine": true },
+    { "match": "swim training", "cat": "sport", "label": "Swim training", "routine": true },
+    { "match": "BUCS|BUSL|gala|swim meet", "cat": "sport", "label": "Swim competition" },
+    { "match": "surf lesson", "cat": "sport", "label": "Surf lesson", "light": true },
+
+    { "match": "bus .*oxford", "cat": "travel", "label": "Bus to Oxford" },
+    { "match": "town night|xmas party", "cat": "raf", "label": "OUAS Town Night" },
+    { "match": "flying|\\bAEF\\b", "cat": "raf", "label": "OUAS flying" },
+    { "match": "OUAS|\\bRAF\\b|squadron", "cat": "raf", "label": "OUAS" },
+
+    { "match": "union", "cat": "social", "label": "Union (VP duty)" },
+    { "match": "social|pub crawl|party|oktoberfest|spoons", "cat": "social", "label": "Club social (VP duty)" },
+    { "match": "lunch|dinner|supper", "cat": "social", "label": "Lunch" },
+
+    { "match": "^drive\\s+(\\S.*?)\\s*(?:→|->)\\s*(\\S.*)$", "cat": "travel", "label": "Drive $1 → $2" },
+    { "match": "car swap", "cat": "travel", "label": "Car swap, Southampton" },
+    { "match": "cornwall trip", "cat": "trip", "label": "Cornwall trip", "away": true },
+    { "match": "check-?in", "cat": "trip", "label": "Check-in, Cornwall" },
+    { "match": "check-?out", "cat": "trip", "label": "Checkout, Cornwall" },
+    { "match": "starlink|engineer", "cat": "home", "label": "Engineer visit, Somerset", "window": true },
+
+    { "match": "^(CS\\w+)\\s*-\\s*LECTURE", "cat": "uni", "label": "$1 lecture", "routine": true },
+    { "match": "^(CS\\w+)\\s*-\\s*PRACTICAL", "cat": "uni", "label": "$1 practical", "routine": true },
+    { "match": "^(CS\\w+)\\s*-\\s*SEMINAR", "cat": "uni", "label": "$1 seminar", "routine": true },
+    { "match": "^(CS\\w+).*progress feedback", "cat": "uni", "label": "$1 progress feedback" },
+    { "match": "^(CS\\w+).*target", "cat": "deadline", "label": "$1 coursework target" },
+    { "match": "^(CS\\w+).*(deadline|due|submit)", "cat": "deadline", "label": "$1 deadline" }
+  ]
+}

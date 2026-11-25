@@ -1,0 +1,39 @@
+{
+  "updatedAt": "2026-11-25T16:02:00Z",
+  "source": "Workload, stress and sleep review, 8 Oct to 8 Dec 2026",
+  "trackingSince": "2026-10-08",
+  "lastRestDay": null,
+  "stats": {
+    "avgDailyLoad": 13.4,
+    "avgSleepWatchH": 6.0,
+    "nightsMeasured": 36,
+    "nightsUnder5": 11,
+    "nightsUnder6": 14,
+    "typicalBedtime": "01:29",
+    "avgWorkingDayH": 10.8
+  },
+  "weeks": [
+    { "weekOf": "2026-10-05", "hours": 34, "avgSleepH": null, "partial": "Thu to Sun" },
+    { "weekOf": "2026-10-12", "hours": 60, "avgSleepH": 6.8 },
+    { "weekOf": "2026-10-19", "hours": 76.8, "avgSleepH": 5.5 },
+    { "weekOf": "2026-10-26", "hours": 75.7, "avgSleepH": 6.1 },
+    { "weekOf": "2026-11-02", "hours": 62.3, "avgSleepH": 6.5 },
+    { "weekOf": "2026-11-09", "hours": 70.9, "avgSleepH": 5.8 },
+    { "weekOf": "2026-11-16", "hours": 67.7, "avgSleepH": 5.9 },
+    { "weekOf": "2026-11-23", "hours": 34.1, "planned": 66.6, "avgSleepH": 6.6 },
+    { "weekOf": "2026-11-30", "planned": 40.2 },
+    { "weekOf": "2026-12-07", "planned": 16.2, "partial": "Mon to Tue" }
+  ],
+  "days": [
+    { "date": "2026-11-16", "type": "Heavy", "hours": 19.2, "note": "Shift, lectures, Town Night, 03:55 train home" },
+    { "date": "2026-11-17", "type": "Heavy", "hours": 12.5, "note": "08:00 shift, lecture and swim on 1.7 h of sleep" },
+    { "date": "2026-11-18", "type": "Light", "hours": 7, "note": "Asleep until 12:08" },
+    { "date": "2026-11-19", "type": "Competition", "hours": 7.5, "note": "BUCS travel and racing, Sheffield" },
+    { "date": "2026-11-20", "type": "Competition", "hours": 6, "note": "BUCS racing" },
+    { "date": "2026-11-21", "type": "Competition", "hours": 6, "note": "BUCS racing on 1 h of sleep" },
+    { "date": "2026-11-22", "type": "Competition", "hours": 9.5, "note": "BUCS racing and the drive home" },
+    { "date": "2026-11-23", "type": "Heavy", "hours": 14.5, "note": "Lectures, Town Night, drives, social until about 03:00" },
+    { "date": "2026-11-24", "type": "Normal", "hours": 6.3, "note": "Seminar, practical, lecture and swim on no sleep" },
+    { "date": "2026-11-25", "type": "Heavy", "hours": 13.3, "note": "Practical, 13:00 to 20:15 shift, then the Somerset drive" }
+  ]
+}

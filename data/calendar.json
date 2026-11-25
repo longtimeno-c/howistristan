@@ -1,0 +1,480 @@
+{
+ "updatedAt": "2026-11-25T16:40:00.000Z",
+ "source": "Google Calendar (5 calendars), read by an agent",
+ "timezone": "Europe/London",
+ "events": [
+  {
+   "start": "2026-11-25",
+   "end": "2026-11-26",
+   "cat": "deadline",
+   "label": "CS2PP coursework target",
+   "allDay": true
+  },
+  {
+   "start": "2026-11-25T09:00:00.000Z",
+   "end": "2026-11-25T11:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2PP practical",
+   "routine": true
+  },
+  {
+   "start": "2026-11-25T12:00:00.000Z",
+   "end": "2026-11-25T13:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to work"
+  },
+  {
+   "start": "2026-11-25T13:00:00.000Z",
+   "end": "2026-11-25T20:15:00.000Z",
+   "cat": "work",
+   "label": "Screwfix shift"
+  },
+  {
+   "start": "2026-11-25T20:30:00.000Z",
+   "end": "2026-11-25T23:30:00.000Z",
+   "cat": "travel",
+   "label": "Drive Reading → Somerset"
+  },
+  {
+   "start": "2026-11-26T12:00:00.000Z",
+   "end": "2026-11-26T14:30:00.000Z",
+   "cat": "social",
+   "label": "Lunch"
+  },
+  {
+   "start": "2026-11-26T14:00:00.000Z",
+   "end": "2026-11-26T16:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2SE practical",
+   "routine": true,
+   "clash": "Lunch"
+  },
+  {
+   "start": "2026-11-26T16:00:00.000Z",
+   "end": "2026-11-26T19:00:00.000Z",
+   "cat": "travel",
+   "label": "Drive Somerset → Reading"
+  },
+  {
+   "start": "2026-11-26T18:30:00.000Z",
+   "end": "2026-11-26T19:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to swim",
+   "routine": true,
+   "clash": "Drive Somerset → Reading"
+  },
+  {
+   "start": "2026-11-26T19:00:00.000Z",
+   "end": "2026-11-26T20:00:00.000Z",
+   "cat": "sport",
+   "label": "Swim training",
+   "routine": true,
+   "clash": "Drive Somerset → Reading"
+  },
+  {
+   "start": "2026-11-27",
+   "end": "2026-11-28",
+   "cat": "deadline",
+   "label": "CS2DA coursework target",
+   "allDay": true
+  },
+  {
+   "start": "2026-11-27T08:00:00.000Z",
+   "end": "2026-11-27T09:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to work"
+  },
+  {
+   "start": "2026-11-27T09:00:00.000Z",
+   "end": "2026-11-27T16:00:00.000Z",
+   "cat": "work",
+   "label": "Screwfix shift"
+  },
+  {
+   "start": "2026-11-27T18:30:00.000Z",
+   "end": "2026-11-27T19:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to swim",
+   "routine": true
+  },
+  {
+   "start": "2026-11-27T19:00:00.000Z",
+   "end": "2026-11-27T20:00:00.000Z",
+   "cat": "sport",
+   "label": "Swim training",
+   "routine": true
+  },
+  {
+   "start": "2026-11-28T08:00:00.000Z",
+   "end": "2026-11-28T09:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to work"
+  },
+  {
+   "start": "2026-11-28T09:00:00.000Z",
+   "end": "2026-11-28T17:00:00.000Z",
+   "cat": "work",
+   "label": "Screwfix shift"
+  },
+  {
+   "start": "2026-11-28T16:00:00.000Z",
+   "end": "2026-11-28T16:30:00.000Z",
+   "cat": "travel",
+   "label": "Travel to swim",
+   "routine": true,
+   "clash": "Screwfix shift"
+  },
+  {
+   "start": "2026-11-28T16:30:00.000Z",
+   "end": "2026-11-28T17:30:00.000Z",
+   "cat": "sport",
+   "label": "Swim training",
+   "routine": true,
+   "clash": "Screwfix shift"
+  },
+  {
+   "start": "2026-11-29T09:00:00.000Z",
+   "end": "2026-11-29T10:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to work"
+  },
+  {
+   "start": "2026-11-29T10:00:00.000Z",
+   "end": "2026-11-29T16:00:00.000Z",
+   "cat": "work",
+   "label": "Screwfix shift"
+  },
+  {
+   "start": "2026-11-29T15:30:00.000Z",
+   "end": "2026-11-29T16:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to swim",
+   "routine": true,
+   "clash": "Screwfix shift"
+  },
+  {
+   "start": "2026-11-29T16:00:00.000Z",
+   "end": "2026-11-29T17:00:00.000Z",
+   "cat": "sport",
+   "label": "Swim training",
+   "routine": true
+  },
+  {
+   "start": "2026-11-30",
+   "end": "2026-12-01",
+   "cat": "deadline",
+   "label": "CS2DA coursework target",
+   "allDay": true
+  },
+  {
+   "start": "2026-11-30T09:00:00.000Z",
+   "end": "2026-11-30T10:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to work"
+  },
+  {
+   "start": "2026-11-30T10:00:00.000Z",
+   "end": "2026-11-30T16:30:00.000Z",
+   "cat": "work",
+   "label": "Screwfix shift"
+  },
+  {
+   "start": "2026-11-30T11:00:00.000Z",
+   "end": "2026-11-30T13:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2PP lecture",
+   "routine": true,
+   "clash": "Screwfix shift"
+  },
+  {
+   "start": "2026-11-30T14:00:00.000Z",
+   "end": "2026-11-30T16:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2DA lecture",
+   "routine": true,
+   "clash": "Screwfix shift"
+  },
+  {
+   "start": "2026-11-30T17:30:00.000Z",
+   "end": "2026-11-30T18:30:00.000Z",
+   "cat": "travel",
+   "label": "Bus to Oxford"
+  },
+  {
+   "start": "2026-11-30T18:30:00.000Z",
+   "end": "2026-11-30T21:30:00.000Z",
+   "cat": "raf",
+   "label": "OUAS Town Night"
+  },
+  {
+   "start": "2026-12-01",
+   "end": "2026-12-02",
+   "cat": "deadline",
+   "label": "CS2PP coursework target",
+   "allDay": true
+  },
+  {
+   "start": "2026-12-01T11:00:00.000Z",
+   "end": "2026-12-01T13:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2DA practical",
+   "routine": true,
+   "clash": "Travel to work"
+  },
+  {
+   "start": "2026-12-01T12:15:00.000Z",
+   "end": "2026-12-01T13:15:00.000Z",
+   "cat": "travel",
+   "label": "Travel to work"
+  },
+  {
+   "start": "2026-12-01T13:15:00.000Z",
+   "end": "2026-12-01T20:00:00.000Z",
+   "cat": "work",
+   "label": "Screwfix shift"
+  },
+  {
+   "start": "2026-12-01T16:00:00.000Z",
+   "end": "2026-12-01T18:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2SE lecture",
+   "routine": true,
+   "clash": "Screwfix shift"
+  },
+  {
+   "start": "2026-12-01T18:30:00.000Z",
+   "end": "2026-12-01T19:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to swim",
+   "routine": true,
+   "clash": "Screwfix shift"
+  },
+  {
+   "start": "2026-12-01T19:00:00.000Z",
+   "end": "2026-12-01T20:00:00.000Z",
+   "cat": "sport",
+   "label": "Swim training",
+   "routine": true,
+   "clash": "Screwfix shift"
+  },
+  {
+   "start": "2026-12-02",
+   "end": "2026-12-03",
+   "cat": "deadline",
+   "label": "CS2DA coursework target",
+   "allDay": true
+  },
+  {
+   "start": "2026-12-02T06:00:00.000Z",
+   "end": "2026-12-02T07:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to work"
+  },
+  {
+   "start": "2026-12-02T07:00:00.000Z",
+   "end": "2026-12-02T13:00:00.000Z",
+   "cat": "work",
+   "label": "Screwfix shift"
+  },
+  {
+   "start": "2026-12-02T09:00:00.000Z",
+   "end": "2026-12-02T11:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2PP progress feedback"
+  },
+  {
+   "start": "2026-12-02T09:00:00.000Z",
+   "end": "2026-12-02T11:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2PP practical",
+   "routine": true,
+   "clash": "Screwfix shift"
+  },
+  {
+   "start": "2026-12-02T16:50:00.000Z",
+   "end": "2026-12-02T19:30:00.000Z",
+   "cat": "travel",
+   "label": "Car swap, Southampton"
+  },
+  {
+   "start": "2026-12-03",
+   "end": "2026-12-07",
+   "cat": "trip",
+   "label": "Cornwall trip",
+   "allDay": true,
+   "away": true
+  },
+  {
+   "start": "2026-12-03T14:00:00.000Z",
+   "end": "2026-12-03T16:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2SE practical",
+   "routine": true,
+   "clash": "Cornwall trip"
+  },
+  {
+   "start": "2026-12-03T15:00:00.000Z",
+   "end": "2026-12-03T15:30:00.000Z",
+   "cat": "trip",
+   "label": "Check-in, Cornwall"
+  },
+  {
+   "start": "2026-12-03T18:30:00.000Z",
+   "end": "2026-12-03T19:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to swim",
+   "routine": true,
+   "clash": "Cornwall trip"
+  },
+  {
+   "start": "2026-12-03T19:00:00.000Z",
+   "end": "2026-12-03T20:00:00.000Z",
+   "cat": "sport",
+   "label": "Swim training",
+   "routine": true,
+   "clash": "Cornwall trip"
+  },
+  {
+   "start": "2026-12-04T13:30:00.000Z",
+   "end": "2026-12-04T15:30:00.000Z",
+   "cat": "sport",
+   "label": "Surf lesson",
+   "light": true
+  },
+  {
+   "start": "2026-12-04T18:30:00.000Z",
+   "end": "2026-12-04T19:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to swim",
+   "routine": true,
+   "clash": "Cornwall trip"
+  },
+  {
+   "start": "2026-12-04T19:00:00.000Z",
+   "end": "2026-12-04T20:00:00.000Z",
+   "cat": "sport",
+   "label": "Swim training",
+   "routine": true,
+   "clash": "Cornwall trip"
+  },
+  {
+   "start": "2026-12-05T10:00:00.000Z",
+   "end": "2026-12-05T12:00:00.000Z",
+   "cat": "sport",
+   "label": "Surf lesson",
+   "light": true
+  },
+  {
+   "start": "2026-12-05T16:00:00.000Z",
+   "end": "2026-12-05T16:30:00.000Z",
+   "cat": "travel",
+   "label": "Travel to swim",
+   "routine": true,
+   "clash": "Cornwall trip"
+  },
+  {
+   "start": "2026-12-05T16:30:00.000Z",
+   "end": "2026-12-05T17:30:00.000Z",
+   "cat": "sport",
+   "label": "Swim training",
+   "routine": true,
+   "clash": "Cornwall trip"
+  },
+  {
+   "start": "2026-12-06T09:30:00.000Z",
+   "end": "2026-12-06T10:00:00.000Z",
+   "cat": "trip",
+   "label": "Checkout, Cornwall"
+  },
+  {
+   "start": "2026-12-06T15:30:00.000Z",
+   "end": "2026-12-06T16:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to swim",
+   "routine": true,
+   "clash": "Cornwall trip"
+  },
+  {
+   "start": "2026-12-06T16:00:00.000Z",
+   "end": "2026-12-06T17:00:00.000Z",
+   "cat": "sport",
+   "label": "Swim training",
+   "routine": true,
+   "clash": "Cornwall trip"
+  },
+  {
+   "start": "2026-12-07",
+   "end": "2026-12-08",
+   "cat": "deadline",
+   "label": "CS2DA coursework target",
+   "allDay": true
+  },
+  {
+   "start": "2026-12-07T08:00:00.000Z",
+   "end": "2026-12-07T20:00:00.000Z",
+   "cat": "home",
+   "label": "Engineer visit, Somerset",
+   "window": true
+  },
+  {
+   "start": "2026-12-07T11:00:00.000Z",
+   "end": "2026-12-07T13:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2PP lecture",
+   "routine": true
+  },
+  {
+   "start": "2026-12-07T14:00:00.000Z",
+   "end": "2026-12-07T16:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2DA lecture",
+   "routine": true
+  },
+  {
+   "start": "2026-12-07T17:30:00.000Z",
+   "end": "2026-12-07T18:30:00.000Z",
+   "cat": "travel",
+   "label": "Bus to Oxford"
+  },
+  {
+   "start": "2026-12-07T18:30:00.000Z",
+   "end": "2026-12-07T21:30:00.000Z",
+   "cat": "raf",
+   "label": "OUAS Town Night"
+  },
+  {
+   "start": "2026-12-08T11:00:00.000Z",
+   "end": "2026-12-08T13:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2DA practical",
+   "routine": true
+  },
+  {
+   "start": "2026-12-08T16:00:00.000Z",
+   "end": "2026-12-08T18:00:00.000Z",
+   "cat": "uni",
+   "label": "CS2SE lecture",
+   "routine": true
+  },
+  {
+   "start": "2026-12-08T18:30:00.000Z",
+   "end": "2026-12-08T19:00:00.000Z",
+   "cat": "travel",
+   "label": "Travel to swim",
+   "routine": true
+  },
+  {
+   "start": "2026-12-08T19:00:00.000Z",
+   "end": "2026-12-08T20:00:00.000Z",
+   "cat": "sport",
+   "label": "Swim training",
+   "routine": true
+  },
+  {
+   "start": "2026-12-08T20:05:00.000Z",
+   "end": "2026-12-08T22:45:00.000Z",
+   "cat": "travel",
+   "label": "Car swap, Southampton"
+  }
+ ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "Tristan",
+  "timezone": "Europe/London",
+  "base": "Reading",
+  "github": "longtimeno-c",
+  "roles": ["CS student", "Screwfix", "OUAS", "Swim and Surf VP"],
+  "sleepNeedH": 8,
+  "restRule": {
+    "summary": "No work shift, no OUAS evening or flying, no swim training or competition, nothing before 10:00, and at most 3 hours of other commitments.",
+    "noCats": ["work", "raf"],
+    "noHardSport": true,
+    "earliestStart": "10:00",
+    "maxOtherHours": 3
+  },
+  "trackingSince": "2026-10-08"
+}

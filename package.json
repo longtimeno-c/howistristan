@@ -1,0 +1,15 @@
+{
+  "name": "howistristan",
+  "private": true,
+  "type": "module",
+  "description": "A live status page for one person.",
+  "scripts": {
+    "sync:github": "node scripts/sync-github.mjs",
+    "sync:calendar": "node scripts/sync-calendar.mjs",
+    "build:artifact": "node scripts/build-artifact.mjs",
+    "serve": "python3 -m http.server 8080"
+  },
+  "dependencies": {
+    "node-ical": "^0.20.1"
+  }
+}

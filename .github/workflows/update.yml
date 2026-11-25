@@ -1,0 +1,55 @@
+name: Update data
+
+# Refreshes the parts of the page that need no agent: GitHub activity always,
+# and the calendar when the GCAL_ICS_URLS secret is set. See README.md.
+
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      TZ: UTC
+      GCAL_ICS_URLS: ${{ secrets.GCAL_ICS_URLS }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: GitHub activity
+        run: node scripts/sync-github.mjs
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Calendar
+        if: env.GCAL_ICS_URLS != ''
+        run: node scripts/sync-calendar.mjs
+
+      - name: Check data
+        run: node scripts/check-data.mjs
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/github.json data/calendar.json
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+          else
+            git commit -m "data: refresh GitHub and calendar"
+            git push
+          fi

@@ -1,0 +1,26 @@
+{
+  "updatedAt": "2026-11-25T16:02:00Z",
+  "source": "Watch data, taken from the 25 Nov workload review",
+  "notes": [
+    "One record per wake date. sleepH is the sleep you woke with that morning.",
+    "restingHR and overnightHR for 12 to 25 Nov were read off the review's chart, so treat them as accurate to about 2 bpm.",
+    "watch: 'off' means the watch was not worn overnight; that night is unknown, not zero."
+  ],
+  "baseline": { "restingHR": 50, "hrv": 68, "hrvLow": 35 },
+  "days": [
+    { "date": "2026-11-12", "watch": "worn", "sleepH": 4.6, "score": 50, "quality": "Poor", "needH": 8, "deepMin": 88, "remMin": 9, "restingHR": 58, "overnightHR": 63 },
+    { "date": "2026-11-13", "watch": "worn", "sleepH": 4.1, "score": 58, "quality": "Poor", "needH": 8, "deepMin": 102, "remMin": 49, "restingHR": 43, "overnightHR": 49 },
+    { "date": "2026-11-14", "watch": "worn", "sleepH": 7.1, "score": 86, "quality": "Good", "needH": 9, "deepMin": 150, "remMin": 77, "restingHR": 43, "overnightHR": 52 },
+    { "date": "2026-11-15", "watch": "worn", "sleepH": 6.5, "score": 83, "quality": "Good", "needH": 8.7, "deepMin": 136, "remMin": 71, "restingHR": 54, "overnightHR": 50 },
+    { "date": "2026-11-16", "watch": "worn", "sleepH": 7.6, "score": 86, "quality": "Good", "needH": 8.3, "deepMin": 108, "remMin": 69, "restingHR": 46, "overnightHR": 50 },
+    { "date": "2026-11-17", "watch": "worn", "sleepH": 1.7, "score": 27, "quality": "Poor", "needH": 8, "deepMin": 55, "remMin": 0, "restingHR": 53, "overnightHR": 64 },
+    { "date": "2026-11-18", "watch": "worn", "sleepH": 12.9, "score": 96, "quality": "Excellent", "needH": 9, "deepMin": 164, "remMin": 181, "restingHR": 47, "overnightHR": 51, "bodyBatteryGain": 95 },
+    { "date": "2026-11-19", "watch": "off" },
+    { "date": "2026-11-20", "watch": "worn", "sleepH": 6.5, "score": 73, "quality": "Fair", "needH": 8, "deepMin": 145, "remMin": 41, "restingHR": 51, "overnightHR": 55 },
+    { "date": "2026-11-21", "watch": "worn", "sleepH": 1.0, "score": 16, "quality": "Poor", "needH": 8, "deepMin": 30, "remMin": 0, "restingHR": 54, "overnightHR": 78, "bodyBatteryGain": 0, "stress": 73, "hrv": 35 },
+    { "date": "2026-11-22", "watch": "off" },
+    { "date": "2026-11-23", "watch": "worn", "sleepH": 9.7, "score": 91, "quality": "Excellent", "needH": 8, "deepMin": 66, "remMin": 134, "restingHR": 49, "overnightHR": 55, "bodyBatteryGain": 80 },
+    { "date": "2026-11-24", "watch": "worn", "sleepH": 0, "restingHR": 54, "note": "No overnight sleep logged; a short nap around 07:30." },
+    { "date": "2026-11-25", "watch": "worn", "sleepH": 10.0, "score": 91, "quality": "Excellent", "needH": 7.2, "deepMin": 140, "remMin": 132, "restingHR": 48, "overnightHR": 56, "bodyBatteryGain": 79 }
+  ]
+}

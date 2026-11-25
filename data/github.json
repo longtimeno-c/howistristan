@@ -1,0 +1,121 @@
+{
+ "updatedAt": "2026-11-25T16:39:00.778Z",
+ "source": "GitHub API: public activity",
+ "login": "longtimeno-c",
+ "notes": [
+  "byHour hours without a printed label were read off the review's chart.",
+  "Commits made while asleep are treated as unattended agents, not as time awake."
+ ],
+ "unit": "commits",
+ "days": {
+  "2026-11-14": 110,
+  "2026-11-15": 67,
+  "2026-11-18": 65,
+  "2026-11-23": 42,
+  "2026-11-24": 65
+ },
+ "pushDays": {
+  "2026-11-24": 32,
+  "2026-11-23": 16,
+  "2026-11-22": 3
+ },
+ "pushByHour": [
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  0,
+  14,
+  10,
+  4,
+  7,
+  4,
+  0,
+  0,
+  3,
+  5,
+  0,
+  2,
+  1,
+  1,
+  0
+ ],
+ "recent": [
+  {
+   "at": "2026-11-24T18:07:41Z",
+   "what": "Pushed",
+   "repo": "mediaviewer"
+  },
+  {
+   "at": "2026-11-24T21:42:53Z",
+   "what": "Pushed",
+   "repo": "mediaviewer"
+  },
+  {
+   "at": "2026-11-24T17:57:02Z",
+   "what": "Pushed",
+   "repo": "mediaviewer"
+  },
+  {
+   "at": "2026-11-24T16:44:54Z",
+   "what": "Created",
+   "repo": "mediaviewer"
+  },
+  {
+   "at": "2026-11-25T12:54:47Z",
+   "what": "Pull request",
+   "repo": "mediaviewer"
+  },
+  {
+   "at": "2026-11-24T14:08:57Z",
+   "what": "Pushed",
+   "repo": "mediaviewer"
+  },
+  {
+   "at": "2026-11-24T13:44:59Z",
+   "what": "Pushed",
+   "repo": "mediaviewer"
+  },
+  {
+   "at": "2026-11-24T13:39:46Z",
+   "what": "Pushed",
+   "repo": "mediaviewer"
+  }
+ ],
+ "review": {
+  "from": "2026-10-08",
+  "to": "2026-11-25",
+  "commits": 1831,
+  "byHour": [
+   88,
+   28,
+   12,
+   0,
+   11,
+   0,
+   0,
+   36,
+   31,
+   52,
+   107,
+   141,
+   78,
+   92,
+   88,
+   72,
+   73,
+   76,
+   41,
+   111,
+   116,
+   134,
+   225,
+   219
+  ]
+ }
+}
