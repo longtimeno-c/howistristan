@@ -133,6 +133,11 @@ In `data/history.json`:
 `data/notes.json` holds up to five dated cautions and a few standing habits. They are judgement,
 not measurement, so write them plainly and keep them short.
 
+Only state what the calendar data shows for that day. A review document, an earlier note or a
+habit ("Wednesdays are usually Union") is not evidence that something is scheduled. Before you write
+or keep a note, check every commitment it names against `data/calendar.json`, and rewrite or remove
+the note if one is missing.
+
 Flag a day when it has any of:
 
 - a drive of an hour or more after a day of 12 committed hours, or after a night under 6 h;
