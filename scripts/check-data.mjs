@@ -7,7 +7,7 @@ import { root } from './lib.mjs';
 
 const dir = join(root, 'data');
 const problems = [];
-const need = { profile: ['name', 'timezone'], calendar: ['updatedAt', 'events'], body: ['updatedAt', 'days'], email: ['updatedAt', 'days'], github: ['updatedAt', 'login'], history: ['updatedAt', 'weeks'], notes: ['updatedAt', 'watch'] };
+const need = { profile: ['name', 'timezone'], calendar: ['updatedAt', 'events'], body: ['updatedAt', 'days'], email: ['updatedAt', 'days'], github: ['updatedAt', 'login'], history: ['updatedAt', 'weeks'], notes: ['updatedAt', 'watch'], heart: ['updatedAt', 'date', 'samples'] };
 const leaks = [
   [/[\w.+-]+@[\w-]+\.[\w.]+/, 'an email address'],
   [/(?:\+44\s?|\b0)7\d{3}\s?\d{6}\b/, 'a phone number'],

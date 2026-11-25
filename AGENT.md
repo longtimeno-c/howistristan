@@ -27,8 +27,9 @@ Do the steps below in order, run the check, commit, push. A full refresh takes a
 |---|---|---|
 | `data/calendar.json` | you (step 1), or the workflow if `GCAL_ICS_URLS` is set | daily, or when plans change |
 | `data/email.json` | you (step 2) | daily |
-| `data/body.json` | you (step 3), only when Tristan supplies watch data | when supplied |
-| `data/github.json` | the hourly workflow; you can run it too (step 4) | hourly |
+| `data/body.json` | the workflow, if `GARMIN_TOKENS` is set (today's record only); otherwise you (step 3), only when Tristan supplies watch data | every 15 minutes, or when supplied |
+| `data/heart.json` | the workflow only. Never write it by hand | every 15 minutes |
+| `data/github.json` | the workflow; you can run it too (step 4) | every 15 minutes |
 | `data/history.json` | you (step 5) | Mondays |
 | `data/notes.json` | you (step 6) | daily |
 | `data/profile.json` | Tristan | rarely |
@@ -88,13 +89,15 @@ Tools: the Gmail connector (`search_threads`, `get_thread`).
 
 ## 3. Sleep, heart and stress
 
-There is no connector for the watch. Update `data/body.json` only from something Tristan has given
+If `data/heart.json` exists and is recent, the workflow is syncing the watch and you can skip this
+step. Otherwise there is no connector for the watch: update `data/body.json` only from something Tristan has given
 you: a Garmin export, a screenshot, or a new review document. One record per **wake date**:
 
 ```json
 { "date": "2026-11-25", "watch": "worn", "sleepH": 10.0, "score": 91, "quality": "Excellent",
   "needH": 7.2, "deepMin": 140, "remMin": 132, "restingHR": 48, "overnightHR": 56,
-  "bodyBatteryGain": 79, "bodyBatteryWake": 84, "stress": 22, "hrv": 71, "wakeTime": "08:10" }
+  "bodyBatteryGain": 79, "bodyBatteryWake": 84, "stress": 22, "hrv": 71, "wakeTime": "08:10",
+  "lightMin": 328, "awakeMin": 12 }
 ```
 
 - `sleepH` is the sleep he woke with that morning. A night with the watch on and no sleep is `0`.
@@ -110,7 +113,7 @@ you: a Garmin export, a screenshot, or a new review document. One record per **w
 node scripts/sync-github.mjs
 ```
 
-The workflow does this hourly, so only run it if the workflow is not enabled yet. It writes public
+The workflow does this every 15 minutes, so only run it if the workflow is not enabled yet. It writes public
 activity only. With a `GH_PAT` in the environment it also writes the daily contribution count.
 
 ## 5. Weekly history (Mondays)

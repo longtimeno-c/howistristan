@@ -3,7 +3,7 @@
 (() => {
   'use strict';
 
-  const FILES = ['profile', 'calendar', 'body', 'email', 'github', 'history', 'notes'];
+  const FILES = ['profile', 'calendar', 'body', 'email', 'github', 'history', 'notes', 'heart'];
   const D = {};
   let TZ = 'Europe/London';
   let events = [];
@@ -138,9 +138,23 @@
     const latest = [...bodyDays()].reverse().find(measured);
     return { need, avg, debt, n: last7.length, latest, todayRec: bodyOn(today) };
   }
+  // Watch readings pushed by scripts/sync-garmin.py. Optional: the page works without them.
+  function liveHeart(now, today) {
+    const hd = D.heart;
+    if (!hd || !Array.isArray(hd.samples) || !hd.samples.length) return null;
+    const at = hd.now ? Date.parse(hd.now.at) : NaN;
+    const bbAt = hd.bodyBattery ? Date.parse(hd.bodyBattery.at) : NaN;
+    return {
+      ...hd, at, isToday: hd.date === today,
+      fresh: hd.date === today && now - at < 45 * 60000,
+      battery: hd.bodyBattery && hd.date === today && now - bbAt < 90 * 60000 ? { level: hd.bodyBattery.level, at: bbAt } : null,
+    };
+  }
   const RATE = { work: 5, sport: 9, uni: 3.5, travel: 4, social: 4.5, raf: 4.5, trip: 3, home: 3, other: 3.5 };
   const BASE_RATE = 2.5;
   function energy(now, today) {
+    const lh = liveHeart(now, today);
+    if (lh && lh.battery) return { level: Math.round(clamp(lh.battery.level, 0, 100)), measured: true, at: lh.battery.at };
     const b = bodyOn(today);
     if (!measured(b)) return null;
     const need = b.needH || (D.profile && D.profile.sleepNeedH) || 8;
@@ -288,7 +302,8 @@
     g.setAttribute('class', `fig-fill${level < 30 ? ' low' : ''}`);
     g.style.display = en ? '' : 'none';
     const hrRec = [...bodyDays()].reverse().find((d) => d.restingHR != null);
-    const bpm = hrRec ? hrRec.restingHR : 60;
+    const lh = liveHeart(now, today);
+    const bpm = lh && lh.fresh ? lh.now.bpm : hrRec ? hrRec.restingHR : 60;
     $('fig-heart').style.animationDuration = `${(60 / bpm).toFixed(2)}s`;
     $('figure').setAttribute('aria-label', en ? `Body figure filled to ${level} percent, the estimated energy level` : 'Body figure, no energy reading today');
 
@@ -302,7 +317,10 @@
       out.push(callout('r', 50, 'Head · sleep', '–', '', `No reading today. ${dayName(latest.date)}: ${hrs(latest.sleepH)} h`, ['none', rec && rec.watch === 'off' ? 'watch off' : 'waiting']));
     } else out.push(callout('r', 50, 'Head · sleep', '–', '', 'No sleep data yet', ['none', 'waiting']));
 
-    if (hrRec) {
+    if (lh && lh.fresh) {
+      const rest = lh.resting != null ? lh.resting : hrRec ? hrRec.restingHR : null;
+      out.push(callout('r', 150, 'Heart', lh.now.bpm, 'bpm', `at ${hm(lh.at)}, from the watch${rest != null ? `. Resting ${rest}` : ''}`, ['good', `synced ${ago(lh.at, now)}`]));
+    } else if (hrRec) {
       const diff = base.restingHR != null ? hrRec.restingHR - base.restingHR : 0;
       const st = diff >= 5 ? ['warn', 'raised'] : ['good', 'normal'];
       const cap = `resting${hrRec.date !== today ? `, ${dayName(hrRec.date)}` : ''}${base.restingHR != null ? `. Usual ${base.restingHR}` : ''}${hrRec.hrv != null ? `. HRV ${hrRec.hrv} ms` : ''}`;
@@ -333,7 +351,7 @@
 
     if (en) {
       const st = en.level < 30 ? ['crit', 'low'] : en.level < 55 ? ['warn', 'draining'] : ['good', 'charged'];
-      out.push(callout('l', 200, 'Core · energy', `${en.level}`, '%', `estimate. Woke at about ${en.wakeLevel}%, drained by today's calendar`, st));
+      out.push(callout('l', 200, 'Core · energy', `${en.level}`, '%', en.measured ? `Body Battery at ${hm(en.at)}, from the watch` : `estimate. Woke at about ${en.wakeLevel}%, drained by today's calendar`, st));
     } else out.push(callout('l', 200, 'Core · energy', '–', '', 'No estimate without last night\'s sleep', ['none', 'waiting']));
 
     if (v.streak) {
@@ -443,12 +461,62 @@
     fill(target, box, x);
   }
 
+  const minsText = (m) => (m >= 60 ? `${Math.floor(m / 60)} h ${String(Math.round(m % 60)).padStart(2, '0')}` : `${Math.round(m)} min`);
+  function renderLastNight(now, today) {
+    const panel = $('night-panel');
+    const todayRec = bodyOn(today);
+    const rec = measured(todayRec) ? todayRec : [...bodyDays()].reverse().find(measured);
+    if (!rec) { panel.hidden = true; return; }
+    panel.hidden = false;
+    const isToday = rec.date === today;
+    $('night-title').textContent = isToday ? 'Last night' : `Last measured night, woke ${dayName(rec.date)}`;
+    $('night-hint').textContent = !isToday && todayRec && todayRec.watch === 'off' ? 'The watch was off last night, so this is the most recent night it recorded.'
+      : !isToday ? 'Nothing from the watch for last night yet.' : rec.note || '';
+    $('night-hint').hidden = !$('night-hint').textContent;
+
+    // score dial
+    const dial = $('night-dial');
+    const has = rec.score != null;
+    const tone = !has ? 'none' : rec.score >= 80 ? 'good' : rec.score >= 60 ? 'warn' : 'crit';
+    const C = 2 * Math.PI * 52;
+    dial.querySelector('.dial-arc').setAttribute('stroke-dasharray', `${has ? (rec.score / 100) * C : 0} ${C}`);
+    dial.querySelector('.dial-arc').setAttribute('class', `dial-arc ${tone}`);
+    $('night-score').textContent = has ? rec.score : '–';
+    $('night-quality').textContent = has ? (rec.quality || 'Sleep score') : 'No score';
+    dial.setAttribute('aria-label', has ? `Sleep score ${rec.score} out of 100, ${rec.quality || ''}` : 'No sleep score for this night');
+
+    // stages
+    const total = rec.sleepH * 60;
+    const deep = rec.deepMin || 0, rem = rec.remMin || 0;
+    const light = rec.lightMin != null ? rec.lightMin : Math.max(0, total - deep - rem);
+    const awake = rec.awakeMin || 0;
+    const stages = [['Deep', deep, 'st-deep'], ['Light', light, 'st-light'], ['REM', rem, 'st-rem'], ['Awake', awake, 'st-awake']].filter((x) => x[1] > 0);
+    const sum = stages.reduce((a, x) => a + x[1], 0);
+    const known = rec.deepMin != null || rec.remMin != null;
+    fill($('night-stages'), total > 0 && known ? [
+      h('div', { class: 'stagebar', role: 'img', 'aria-label': stages.map((x) => `${x[0]} ${minsText(x[1])}`).join(', ') }, stages.map((x) => h('i', { class: x[2], style: `flex:${x[1]} 1 0`, tip: `${x[0]}\n${minsText(x[1])}, ${Math.round((x[1] / sum) * 100)}%` }))),
+      h('div', { class: 'stagekey' }, stages.map((x) => h('span', null, h('i', { class: x[2] }), `${x[0]} `, h('b', null, minsText(x[1]))))),
+    ] : h('p', { class: 'hint', style: 'margin:0' }, total > 0 ? 'No sleep-stage breakdown for this night.' : 'No sleep was recorded.'));
+
+    const need = rec.needH || (D.profile && D.profile.sleepNeedH) || 8;
+    const cells = [[`${hrs(rec.sleepH)} h`, `slept, against a need of ${hrs(need)} h`]];
+    if (rec.wakeTime) cells.push([rec.wakeTime, 'woke up']);
+    if (rec.bodyBatteryGain != null) cells.push([`${rec.bodyBatteryGain >= 0 ? '+' : ''}${rec.bodyBatteryGain}`, `Body Battery recharged overnight${rec.bodyBatteryWake != null ? `, to ${rec.bodyBatteryWake}` : ''}`]);
+    if (rec.restingHR != null) cells.push([`${rec.restingHR} bpm`, 'resting heart rate']);
+    if (rec.overnightHR != null) cells.push([`${rec.overnightHR} bpm`, 'average heart rate overnight']);
+    if (rec.hrv != null) cells.push([`${rec.hrv} ms`, 'overnight HRV']);
+    if (rec.stress != null) cells.push([`${rec.stress}`, 'overnight stress, out of 100']);
+    fill($('night-stats'), cells.map(([v, c]) => h('div', { class: 'stat' }, h('div', { class: 'v' }, v), h('div', { class: 'c' }, c))));
+  }
+
   function renderRecovery(now, today) {
     const days = [];
+    const scores = [];
     for (let i = 13; i >= 0; i--) {
       const key = addDays(today, -i);
       const d = bodyOn(key);
       const xl = keyFmt(key, { day: 'numeric' });
+      scores.push(measured(d) && d.score != null ? d.score : '');
       if (!d) days.push({ x: xl, value: 0, tip: `${dayName(key)}\nNo data`, cls: 'soft' });
       else if (!measured(d)) days.push({ x: xl, off: true, tip: `${dayName(key)}\nWatch off, night unknown` });
       else days.push({
@@ -458,6 +526,7 @@
       });
     }
     barChart($('sleep-chart'), days, { max: 14, padPct: 8, label: 'Hours slept each night for the last 14 nights', guides: [{ at: 7, text: '7 h' }] });
+    if (scores.some((x) => x !== '')) $('sleep-chart').append(h('div', { class: 'xlabels scores', 'aria-label': 'Sleep score for each night' }, scores.map((x) => h('span', { class: x === '' ? '' : x >= 80 ? 'good' : x >= 60 ? 'warn' : 'crit' }, x))), h('div', { class: 'rowlabel' }, 'Sleep score out of 100'));
     $('sleep-title').textContent = `Sleep, last 14 nights (${keyFmt(addDays(today, -13), { day: 'numeric', month: 'short' })} to ${keyFmt(today, { day: 'numeric', month: 'short' })})`;
     const s = sleepSummary(today);
     const st = (D.history && D.history.stats) || {};
@@ -470,6 +539,75 @@
     if (base.hrv != null) cells.push([`${base.hrv} ms`, `average overnight HRV${base.hrvLow != null ? `, low of ${base.hrvLow}` : ''}`]);
     fill($('sleep-stats'), cells.map(([v, c]) => h('div', { class: 'stat' }, h('div', { class: 'v' }, v), h('div', { class: 'c' }, c))));
     asof('body-asof', 'body', now, 30);
+  }
+
+  let heartHover = null;
+  function renderHeart(now, today) {
+    const panel = $('heart-panel');
+    const lh = liveHeart(now, today);
+    if (!lh) { panel.hidden = true; return; }
+    panel.hidden = false;
+    const pts = lh.samples.filter((p) => Array.isArray(p) && p[1] > 0);
+    const vals = pts.map((p) => p[1]);
+    const lo = Math.floor((Math.min(...vals, lh.resting || 999) - 6) / 10) * 10;
+    const hi = Math.ceil((Math.max(...vals) + 6) / 10) * 10;
+    const y = (v) => 100 - ((v - lo) / (hi - lo)) * 100;
+    const gap = (lh.bucketMin || 10) * 3;
+    let d = '', area = '', segStart = null, prev = null;
+    const closeArea = () => { if (segStart != null) area += `L${prev} 100L${segStart} 100Z`; };
+    for (const [m, v] of pts) {
+      if (prev == null || m - prev > gap) { closeArea(); d += `M${m} ${y(v).toFixed(1)}`; area += `M${m} ${y(v).toFixed(1)}`; segStart = m; }
+      else { d += `L${m} ${y(v).toFixed(1)}`; area += `L${m} ${y(v).toFixed(1)}`; }
+      prev = m;
+    }
+    closeArea();
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 1440 100');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('aria-hidden', 'true');
+    const add = (tag, attrs) => { const el = document.createElementNS(NS, tag); for (const k in attrs) el.setAttribute(k, attrs[k]); svg.append(el); return el; };
+    for (const g of [360, 720, 1080]) add('line', { x1: g, x2: g, y1: 0, y2: 100, class: 'hr-grid' });
+    if (lh.resting != null) add('line', { x1: 0, x2: 1440, y1: y(lh.resting), y2: y(lh.resting), class: 'hr-rest' });
+    add('path', { d: area, class: 'hr-area' });
+    add('path', { d, class: 'hr-line' });
+    const box = $('heart-chart');
+    const last = pts[pts.length - 1];
+    const kids = [svg];
+    for (const t of [hi, Math.round((lo + hi) / 20) * 10, lo]) kids.push(h('span', { class: 'hr-y', style: `top:${y(t)}%` }, t));
+    if (lh.resting != null) kids.push(h('span', { class: 'hr-restlabel', style: `top:${y(lh.resting)}%` }, `resting ${lh.resting}`));
+    kids.push(h('i', { class: 'hr-dot', style: `left:${(last[0] / 1440) * 100}%;top:${y(last[1])}%` }));
+    kids.push(h('span', { class: 'hr-now', style: `left:${(last[0] / 1440) * 100}%;top:${y(last[1])}%` }, `${last[1]}`));
+    if (lh.isToday) { const p = parts(now); kids.push(h('i', { class: 'hr-clock', style: `left:${((+p.hour * 60 + +p.minute) / 1440) * 100}%` })); }
+    const cross = h('i', { class: 'hr-cross', hidden: '' });
+    kids.push(cross);
+    fill(box, kids);
+    box.setAttribute('aria-label', `Heart rate through ${lh.isToday ? 'today' : dayName(lh.date)}, from ${Math.min(...vals)} to ${Math.max(...vals)} beats per minute`);
+    const label = (m) => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+    if (heartHover) { box.removeEventListener('pointermove', heartHover); box.removeEventListener('pointerleave', heartHover); }
+    heartHover = (e) => {
+      const tip = $('tip');
+      if (e.type === 'pointerleave') { cross.hidden = true; if (tip) tip.hidden = true; return; }
+      const r = box.getBoundingClientRect();
+      const m = ((e.clientX - r.left) / r.width) * 1440;
+      const near = pts.reduce((a, b) => (Math.abs(b[0] - m) < Math.abs(a[0] - m) ? b : a));
+      cross.hidden = false;
+      cross.style.left = `${(near[0] / 1440) * 100}%`;
+      if (!tip) return;
+      tip.textContent = `${label(near[0])}\n${near[1]} bpm`;
+      tip.hidden = false;
+      const half = tip.offsetWidth / 2 + 8;
+      tip.style.left = `${clamp(r.left + (near[0] / 1440) * r.width, half, window.innerWidth - half)}px`;
+      tip.style.top = `${r.top + (y(near[1]) / 100) * r.height}px`;
+      e.stopPropagation();
+    };
+    box.addEventListener('pointermove', heartHover);
+    box.addEventListener('pointerleave', heartHover);
+    $('heart-title').textContent = lh.isToday ? 'Heart rate today' : `Heart rate, ${dayName(lh.date)}`;
+    const bits = [`${lh.bucketMin || 10}-minute averages from the watch`];
+    if (!Number.isNaN(lh.at)) bits.push(`last reading ${lh.now.bpm} bpm at ${hm(lh.at)}, ${ago(lh.at, now)}`);
+    if (lh.stress && lh.isToday) bits.push(`stress ${lh.stress.level}`);
+    $('heart-hint').textContent = bits.join(' · ') + '. The watch only reports when it syncs to the phone.';
   }
 
   function renderLoad(now, today) {
@@ -562,7 +700,7 @@
 
   function renderSources(now) {
     const rows = [
-      ['Calendar', 'calendar', 26], ['Sleep and heart', 'body', 30], ['Email', 'email', 30], ['GitHub', 'github', 30], ['Weekly history', 'history', 24 * 9], ['Watch-outs', 'notes', 24 * 9],
+      ['Calendar', 'calendar', 26], ['Sleep and heart', 'body', 30], ...(D.heart ? [['Heart rate, live', 'heart', 3]] : []), ['Email', 'email', 30], ['GitHub', 'github', 30], ['Weekly history', 'history', 24 * 9], ['Watch-outs', 'notes', 24 * 9],
     ].map(([name, f, maxH]) => {
       const t = D[f] && Date.parse(D[f].updatedAt);
       const stale = !t || now - t > maxH * HOUR;
@@ -580,7 +718,9 @@
     renderAlert(today);
     renderToday(now, today);
     renderDays(now, today);
+    renderLastNight(now, today);
     renderRecovery(now, today);
+    renderHeart(now, today);
     renderLoad(now, today);
     renderOutput(now, today);
     renderWatch(today);
@@ -602,7 +742,7 @@
       tip.style.top = `${above ? r.top : r.bottom + tip.offsetHeight + 20}px`;
     };
     const hide = () => { tip.hidden = true; };
-    document.addEventListener('pointerover', (e) => { const el = e.target.closest && e.target.closest('[data-tip]'); if (el) show(el); else hide(); });
+    document.addEventListener('pointerover', (e) => { const el = e.target.closest && e.target.closest('[data-tip]'); if (el) show(el); else if (!(e.target.closest && e.target.closest('.hrchart'))) hide(); });
     document.addEventListener('focusin', (e) => { const el = e.target.closest && e.target.closest('[data-tip]'); if (el) show(el); });
     document.addEventListener('focusout', hide);
     window.addEventListener('scroll', hide, { passive: true });

@@ -15,10 +15,10 @@ python3 -m http.server 8080
 | What | Where it comes from | Updates |
 |---|---|---|
 | Clock, current activity, progress bar, energy estimate, rest-day streak, headline | worked out in the browser from the calendar and last night's sleep | every 30 seconds, no data refresh needed |
-| GitHub activity | `scripts/sync-github.mjs` in the hourly workflow, plus a live read of public activity in the browser | hourly, and live |
-| Calendar | either the hourly workflow reading Google Calendar's private iCal feeds, or an agent with the Google Calendar connector | hourly, or daily |
+| GitHub activity | `scripts/sync-github.mjs` in the workflow, plus a live read of public activity in the browser | every 15 minutes, and live |
+| Calendar | either the workflow reading Google Calendar's private iCal feeds, or an agent with the Google Calendar connector | every 15 minutes, or daily |
 | Emails sent | an agent with the Gmail connector (counts and times only) | daily |
-| Sleep, heart rate, stress | an agent, from watch data Tristan supplies | when supplied |
+| Heart rate, sleep score and stages, HRV, stress, Body Battery | the workflow reading Garmin Connect, once `GARMIN_TOKENS` is set; otherwise an agent, from watch data Tristan supplies | every 15 minutes, as fresh as the watch's last sync |
 | Weekly history and watch-outs | an agent | weekly, daily |
 
 Everything an agent does is written down in [AGENT.md](AGENT.md).
@@ -41,9 +41,34 @@ Each panel says when its data was last updated and turns amber when it is out of
    ```
 
    Those addresses give read access to the whole calendar, so they belong in a secret and nowhere else.
-4. **Email, sleep and notes** need an agent. Set up the daily scheduled task described at the end
+4. **Watch data from Garmin.** On your own computer, once:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   ```bash
+   python3 scripts/garmin-login.py | gh secret set GARMIN_TOKENS
+   ```
+
+   It asks for your Garmin email, password and two-factor code and stores a sign-in token as the
+   secret. Your password is not kept. Garmin replaces that token from time to time, so the
+   workflow has to be able to save the new one: give the `GH_PAT` token from step 2 the
+   repository permission **Secrets: read and write** on this repository.
+
+   What to expect:
+   - Garmin offers no public feed for personal data. This uses the community `garminconnect`
+     client, which speaks to the same service as the Garmin Connect app. It can break when Garmin
+     changes something, and Garmin sometimes blocks sign-ins from data centres.
+   - It is not a live stream. The watch hands its readings to your phone when it syncs, so the
+     page is usually 15 minutes to an hour behind, and further behind when the phone is away.
+   - Heart rate is published as 10-minute averages. Change `heart.bucketMin` in
+     `data/profile.json` for finer or coarser.
+   - If the first run writes nothing, run `python3 scripts/sync-garmin.py --shapes` locally with
+     `GARMIN_TOKENS` set. It prints the field names Garmin returned, without the values.
+5. **Email and notes** need an agent. Set up the daily scheduled task described at the end
    of AGENT.md.
-5. **Hosting.** Settings, Pages, deploy from `main`, root folder. The site is then public at
+6. **Hosting.** Settings, Pages, deploy from `main`, root folder. The site is then public at
    `https://longtimeno-c.github.io/howistristan/`.
 
 ## What gets published
@@ -69,9 +94,11 @@ config/calendar-rules.json  what calendar events may be shown as
 scripts/normalize-calendar.mjs  raw events -> data/calendar.json
 scripts/sync-calendar.mjs   iCal feeds -> data/calendar.json
 scripts/sync-github.mjs     GitHub API -> data/github.json
+scripts/sync-garmin.py      Garmin Connect -> data/heart.json and today's record in data/body.json
+scripts/garmin-login.py     one-time Garmin sign-in, run on your own computer
 scripts/check-data.mjs      validates data/ and looks for leaks
 scripts/build-artifact.mjs  bundles the page into one file for hosts that wrap it
-.github/workflows/update.yml  the hourly job
+.github/workflows/update.yml  the job that runs every 15 minutes
 ```
 
 ## How the numbers are worked out

@@ -1,11 +1,14 @@
 name: Update data
 
-# Refreshes the parts of the page that need no agent: GitHub activity always,
-# and the calendar when the GCAL_ICS_URLS secret is set. See README.md.
+# Refreshes the parts of the page that need no agent, every 15 minutes:
+#   GitHub activity   always
+#   Calendar          when the GCAL_ICS_URLS secret is set
+#   Watch data        when the GARMIN_TOKENS secret is set
+# See README.md for how to create each secret.
 
 on:
   schedule:
-    - cron: "23 * * * *"
+    - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -21,6 +24,7 @@ jobs:
     env:
       TZ: UTC
       GCAL_ICS_URLS: ${{ secrets.GCAL_ICS_URLS }}
+      GARMIN_TOKENS: ${{ secrets.GARMIN_TOKENS }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -39,6 +43,32 @@ jobs:
         if: env.GCAL_ICS_URLS != ''
         run: node scripts/sync-calendar.mjs
 
+      - name: Set up Python for the watch sync
+        if: env.GARMIN_TOKENS != ''
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Watch data (Garmin)
+        if: env.GARMIN_TOKENS != ''
+        continue-on-error: true
+        env:
+          GARMIN_TOKENS_OUT: ${{ runner.temp }}/garmin-tokens.json
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          pip install -q -r requirements.txt
+          python3 scripts/sync-garmin.py
+          # Garmin can replace the sign-in token during a run. Store the new one, or the next run cannot sign in.
+          if [ -s "$GARMIN_TOKENS_OUT" ]; then
+            if [ -n "$GH_TOKEN" ]; then
+              gh secret set GARMIN_TOKENS --repo "$GITHUB_REPOSITORY" < "$GARMIN_TOKENS_OUT" && echo "Stored the new Garmin token."
+            else
+              echo "::warning::Garmin issued a new token but GH_PAT is not set, so it was not saved. The watch sync may stop until you sign in again."
+            fi
+            rm -f "$GARMIN_TOKENS_OUT"
+          fi
+
       - name: Check data
         run: node scripts/check-data.mjs
 
@@ -46,10 +76,11 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/github.json data/calendar.json
+          git add data
           if git diff --cached --quiet; then
             echo "Nothing changed."
           else
-            git commit -m "data: refresh GitHub and calendar"
+            git commit -m "data: automatic refresh"
+            git pull --rebase --autostash
             git push
           fi
